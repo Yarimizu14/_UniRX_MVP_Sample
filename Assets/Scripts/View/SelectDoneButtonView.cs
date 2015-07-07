@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UniRx;
+using UniRx.Triggers;
 
 public class SelectDoneButtonView : MonoBehaviour {
 
@@ -16,5 +18,10 @@ public class SelectDoneButtonView : MonoBehaviour {
 	public void OnSelectDoneChaged(bool selectDone)
 	{
 		_button.interactable = selectDone;
+	}
+
+	public IObservable<Unit> OnClickAsObservable()
+	{
+		return this._button.onClick.AsObservable ();
 	}
 }

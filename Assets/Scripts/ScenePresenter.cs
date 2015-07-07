@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UniRx;
@@ -20,11 +22,11 @@ public class ScenePresenter : MonoBehaviour
 	[SerializeField]
 	private SelectDoneButtonView selectDoneButtonView;
 
+	private ReactiveCollection<MonsterThumbView> monsterThumbViews;
+
 	#endregion
 
 	#region Models
-
-	private ReactiveCollection<MonsterThumbView> monsterThumbViews;
 
 	private MonsterListModel monsterListModel; 
 
@@ -43,18 +45,16 @@ public class ScenePresenter : MonoBehaviour
 			});
 
 			model.isSelected.Subscribe(thumb.OnMonsterSelecteStateChanged);
-
-			/*
-			thumb.OnMouseUpAsObservable().Subscribe((Unit _) => {
-				monsterListModel.SetFocustMonster(addEvent.Value);
-			});
-            */
 		});
 
 		monsterListModel.focusMonster.Subscribe (focusMonsterView.OnFocusMonsterChanged);
 		monsterListModel.focusMonster.Subscribe (focusMonsterIdView.OnFocusMonsterChanged);
 
 		monsterListModel.selectDone.Subscribe (selectDoneButtonView.OnSelectDoneChaged);
+
+		selectDoneButtonView.OnClickAsObservable ().Subscribe ((Unit _) => {
+			Debug.Log("選択完了！！");
+		});
 
 		monsterListModel.Initialize ();
 	}
