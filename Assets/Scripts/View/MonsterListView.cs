@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UniRx;
+using UniRx.Triggers;
 
 public class MonsterListView : MonoBehaviour {
 
@@ -12,7 +13,7 @@ public class MonsterListView : MonoBehaviour {
 	/// </summary>
 	/// <param name="model">Model.</param>
 	/// <param name="index">Index.</param>
-	public void OnDeckMonsterAdd(CollectionAddEvent<MonsterModel> addEvent)
+	public MonsterThumbView OnDeckMonsterAdd(CollectionAddEvent<MonsterModel> addEvent)
 	{
 		GameObject monsterThumbObj = Instantiate (monsterThumbPrefab) as GameObject;
 
@@ -22,5 +23,7 @@ public class MonsterListView : MonoBehaviour {
 		thumbView.gameObject.SetActive (true);
 		thumbView.transform.Translate (new Vector3 (150f * addEvent.Index, 0, 0));
 		monsterThumbObj.transform.SetParent (this.transform, false);
+
+		return thumbView;
 	}
 }
